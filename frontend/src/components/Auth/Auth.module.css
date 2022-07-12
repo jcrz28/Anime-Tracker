@@ -1,0 +1,66 @@
+.flex form{
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card{
+    max-width: 45rem;
+    margin: 2.5rem 1rem;
+    align-items: center;
+    background-color: #5e7988;
+    color:white;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.header{
+    text-align: center;  
+    margin: 1rem 0rem;
+}
+
+.control, .actions {
+    font-size: 1.25rem;
+}
+
+.control label {
+    display: block;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.control input {
+    width: 70vw;
+    max-width: 30rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.actions{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.actions button {
+    border-radius: .25rem;
+    background-color: #0d6efd;
+}
+
+.actions button,
+.actions p {
+    margin-top: 1rem;
+    text-decoration: none;
+    padding: 0.5rem 2rem;
+    color: white;
+}
+
+.actions p:hover {
+    background-color: rgb(29, 32, 32);
+    border-radius: 0.5rem;  
+
+    transition-duration: 0.2s;
+    transform: scale(1.05);
+    cursor:pointer;
+}
