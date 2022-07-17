@@ -6,6 +6,8 @@ const dashboardControllers = require('../controllers/dashboard-controller');
 const checkAuth = require('../middleware/check-auth');
 
 router.get('/:uid', dashboardControllers.getAnimesByUserId);
+router.get('/:uid/:title', dashboardControllers.getAnimesByTitle);
+
 router.use(checkAuth);
 router.post(
     '/:uid', 

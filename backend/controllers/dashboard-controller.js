@@ -22,6 +22,33 @@ const getAnimesByUserId = async (req, res, next) => {
     res.json({animes: userWithAnime.animes.map(anime => anime.toObject({getters: true}))})
 }
 
+const getAnimesByTitle= async (req, res, next) => {
+    const userId = req.params.uid;
+    const title = req.params.title;
+    let user, animes;
+
+    try{
+        user = await User.findById(userId);
+    }catch (err){
+        const error = new HttpError('Adding anime failed.', 500);
+        return next (error);
+    }
+
+    if(!user) {
+        const error = new HttpError('Could not find user for provided id', 404);
+        return next(error);
+    }
+
+    try{
+        animes = await Anime.find({title: {"$regex": title, "$options": "i"}})
+    }catch(err){
+        const error = new HttpError('Adding anime failed', 500);
+        return next (error);
+    }
+
+    res.json({animes: animes.map(anime => anime.toObject({getters: true}))});
+}
+
 const addAnime = async (req, res, next) => {
     const errors = validationResult(req);
     let user, existingAnime;
@@ -113,19 +140,7 @@ const deleteAnime = async (req, res, next) => {
     }
     res.status(200).json({message: "Anime Deleted."})
 }
-
-/* 
-{
-    "title": "Sasuke",
-    "images":{
-        "jpg": {
-                "image_url": "https://cdn.myanimelist.net/images/anime/13/17405.jpg"
-            }
-        },
-        "creator": "u1"
-    
-}
- */
 exports.getAnimesByUserId = getAnimesByUserId;
+exports.getAnimesByTitle = getAnimesByTitle;
 exports.addAnime = addAnime;
 exports.deleteAnime = deleteAnime;

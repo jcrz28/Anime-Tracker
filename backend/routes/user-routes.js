@@ -14,5 +14,6 @@ router.post(
     userControllers.signup);
     
 router.post('/login', userControllers.login);
+router.delete('/unsubscribe', userControllers.unsubscribe);
 
 module.exports = router;

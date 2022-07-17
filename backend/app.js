@@ -44,7 +44,7 @@ app.use((error, req, res, next) => {
 })
 mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@anime-tracker.kxha7.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`)
 .then(() => {
-    app.listen(process.env.PORT);
+    app.listen(process.env.DB_PORT);
 }).
 catch( err => {
     console.log(err);

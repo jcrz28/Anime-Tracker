@@ -19,7 +19,7 @@ const App = () => {
             )}
 
             {authCtx.isLoggedIn && (
-              <Route path ='/dashboard/:userID' element={<DashboardPage />}/>
+              <Route path ='/dashboard/:userId' element={<DashboardPage />}/>
             )}
             </Routes>
       </BrowserRouter>

@@ -44,6 +44,7 @@ const AnimeCard = (props) => {
 
     const deleteAnime = async event => {
         event.preventDefault();
+        setBump(true);
         try{
             const newAnime = await fetch(`http://localhost:5000/dashboard/${authCtx.userId}/${anime.id}`, {
                 method: 'DELETE',
@@ -56,11 +57,12 @@ const AnimeCard = (props) => {
           if (!newAnime.ok) {
             throw new Error(response.message);
           }
-          window.location.reload();
+          props.onDelete(anime.id)
             
         }catch (error) {
             alert (error)
         }
+        setBump(false);
 
     }
 	return (

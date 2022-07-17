@@ -2,7 +2,9 @@ require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {validationResult} = require('express-validator');
+const mongoose = require('mongoose');
 const User = require('../models/user');
+const Anime = require('../models/anime');
 const HttpError = require('../models/http-error');
 
 // http://localhost:5000/auth/signup
@@ -115,5 +117,54 @@ const login = async (req, res, next) =>{
     })
 }
 
+const unsubscribe = async (req, res, next) => {
+    const {email, password} = req.body;
+
+    let existingUser, anime;
+    let isValidPassword = false;
+
+    try {
+        existingUser = await User.findOne({ email: email });
+    } catch (err) {
+        const error = new HttpError('Unsubscribing failed. Please try again later.',500);
+        return next(error);
+    }
+
+    if(!existingUser){
+        const error = new HttpError('Invalid credentials.', 401);
+        return next(error);
+    }
+
+    try{
+        isValidPassword = await bcrypt.compare(password, existingUser.password);
+    }catch (err){
+        const error = new HttpError('Unsubscribing failed. Please try again later.',500);
+        return next(error);
+    }
+
+    if(!isValidPassword){
+        const error = new HttpError('Invalid credentials.', 401);
+        return next(error);
+    }
+
+    // Deletes all anime lists by the user
+    try {
+        anime = await Anime.find({creator: existingUser}).deleteMany();
+    }catch (err) {
+        const error = new HttpError('Could not fetch anime lists. Please try again later.',500);
+        return next(error);
+    }
+    
+    // Deletes the user 
+    try{
+        existingUser.remove();
+    }catch (err){
+        const error = new HttpError('Could not unsubscribe user. Please try again later.',500);
+        return next(error);
+    }
+    res.status(200).json({message: "User Deleted."})
+}
+
 exports.signup = signup;
 exports.login = login;
+exports.unsubscribe = unsubscribe;

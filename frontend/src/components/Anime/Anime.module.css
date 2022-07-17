@@ -1,35 +1,7 @@
-.flex form{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-}
-
 .header{
     padding: 2rem 0rem;
     text-align: center;
     color: white;
-}
-
-.control {
-    display: flex;
-    margin-bottom: 2rem;
-}
-
-.control span{
-    color:white;
-    background-color: #5e7988;
-    padding: 0.25rem .50rem;
-}
-
-.control span:hover{
-    color:rgb(29, 32, 32);
-    cursor: pointer;
-}
-
-.control input {
-    max-width: 20rem;
-    padding-left: 1rem;
 }
 
 main{
